@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="frame_width">400dp</dimen>
+    <dimen name="frame_height">300dp</dimen>
+    <dimen name="margin_frame_top">20dp</dimen>
+
+    <dimen name="user_gold_width">150dp</dimen>
+    <dimen name="user_gold_height">30dp</dimen>
+    <dimen name="margin_user_gold_top">20dp</dimen>
+    <dimen name="user_gold_text_size">20sp</dimen>
+</resources>
