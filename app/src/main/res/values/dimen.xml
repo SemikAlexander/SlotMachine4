@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="frame_width">400dp</dimen>
-    <dimen name="frame_height">300dp</dimen>
+    <dimen name="frame_width">486dp</dimen>
+    <dimen name="frame_height">345dp</dimen>
     <dimen name="margin_frame_top">20dp</dimen>
+
+    <dimen name="margin_start_and_end">46dp</dimen>
+
+    <dimen name="bet_button_width">25dp</dimen>
+
+    <dimen name="slot_image_width">47dp</dimen>
+    <dimen name="slot_image_height">48dp</dimen>
 
     <dimen name="user_gold_width">150dp</dimen>
     <dimen name="user_gold_height">30dp</dimen>

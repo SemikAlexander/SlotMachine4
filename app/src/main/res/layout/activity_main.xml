@@ -1,164 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/bakgraund1">
+    android:background="@drawable/bakgraund1"
+    tools:context=".MainActivity">
 
     <RelativeLayout
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        tools:ignore="UselessParent">
+        android:id="@+id/game_frame"
+        android:layout_width="@dimen/frame_width"
+        android:layout_height="@dimen/frame_height"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="@dimen/margin_frame_top"
+        android:layout_marginEnd="121dp"
+        android:layout_marginRight="121dp"
+        android:layout_marginBottom="47dp"
+        android:background="@drawable/ramka"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-        <RelativeLayout
-            android:id="@+id/game_frame"
-            android:layout_width="@dimen/frame_width"
-            android:layout_height="@dimen/frame_height"
-            android:layout_marginTop="@dimen/margin_frame_top"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/ramka">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                tools:ignore="UselessParent">
+            <ImageView
+                android:id="@+id/slot1"
+                android:layout_width="@dimen/slot_image_width"
+                android:layout_height="@dimen/slot_image_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon1"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/slot1"
-                    android:layout_width="47dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon1"
-                    android:layout_marginLeft="72dp"
-                    android:layout_marginStart="72dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/slot2"
+                android:layout_width="@dimen/slot_image_width"
+                android:layout_height="@dimen/slot_image_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon2"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/slot2"
-                    android:layout_width="47dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon2"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/slot3"
+                android:layout_width="@dimen/slot_image_width"
+                android:layout_height="@dimen/slot_image_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon3"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/slot3"
-                    android:layout_width="47dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon3"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/slot4"
+                android:layout_width="@dimen/slot_image_width"
+                android:layout_height="@dimen/slot_image_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon4"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/slot4"
-                    android:layout_width="47dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon4"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/slot5"
+                android:layout_width="@dimen/slot_image_width"
+                android:layout_height="@dimen/slot_image_height"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon5"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/slot5"
-                    android:layout_width="47dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon5"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="@dimen/user_gold_width"
-            android:layout_height="@dimen/user_gold_height"
-            android:layout_marginTop="@dimen/margin_user_gold_top"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/gold">
-
-            <com.example.slotmachine4.view.UserGoldTextView
-                android:id="@+id/user_gold_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="2500"/>
-
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/spin"
-            android:layout_width="110dp"
-            android:layout_height="35dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/spin"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="312dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginEnd="40dp"
-            tools:ignore="ContentDescription" />
-
-        <RelativeLayout
-            android:id="@+id/user_bet"
-            android:layout_width="140dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/bet"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="312dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginStart="40dp">
-
-            <com.example.slotmachine4.view.UserRateTextView
-                android:id="@+id/user_rate"
-                android:layout_width="37dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="35dp"
-                android:layout_marginEnd="35dp"
-                android:textAlignment="center"
-                android:gravity="center_horizontal"
-                android:text="5" />
-
-            <Button
-                android:id="@+id/increase_rate"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="3dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp" />
-
-            <Button
-                android:id="@+id/reduce_rate"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="3dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="43dp"
-                android:layout_marginStart="42dp" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="173dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="173dp"
+        android:layout_marginLeft="173dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="173dp"
+        android:layout_marginRight="173dp"
+        android:background="@drawable/gold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <com.example.slotmachine4.view.UserGoldTextView
+            android:id="@+id/user_gold_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="2500" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_bet"
+        android:layout_width="173dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="@dimen/margin_start_and_end"
+        android:layout_marginLeft="@dimen/margin_start_and_end"
+        android:layout_marginTop="335dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/bet"
+        app:layout_constraintStart_toStartOf="@+id/game_frame"
+        app:layout_constraintTop_toTopOf="@+id/game_frame"
+        tools:ignore="MissingConstraints">
+
+        <com.example.slotmachine4.view.UserRateTextView
+            android:id="@+id/user_rate"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="45dp"
+            android:layout_marginRight="45dp"
+            android:gravity="center_horizontal"
+            android:text="5"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/increase_rate"
+            android:layout_width="@dimen/bet_button_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@android:color/transparent" />
+
+        <Button
+            android:id="@+id/reduce_rate"
+            android:layout_width="@dimen/bet_button_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="57dp"
+            android:layout_marginLeft="57dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/transparent" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/spin"
+        android:layout_width="146dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="@dimen/margin_start_and_end"
+        android:layout_marginRight="@dimen/margin_start_and_end"
+        android:background="@android:color/transparent"
+        android:src="@drawable/spin"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/game_frame"
+        app:layout_constraintTop_toTopOf="@+id/user_bet"
+        app:layout_constraintBottom_toBottomOf="@id/user_bet"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

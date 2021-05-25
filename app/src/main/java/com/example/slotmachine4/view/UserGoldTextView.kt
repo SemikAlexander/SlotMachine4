@@ -13,6 +13,6 @@ class UserGoldTextView (context: Context, attrs: AttributeSet)
     init {
         setTextColor(ContextCompat.getColor(context, R.color.user_gold_color))
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
-        typeface = ResourcesCompat.getFont(context, R.font.f19847)
+        typeface = ResourcesCompat.getFont(context, R.font.f20705)
     }
 }
