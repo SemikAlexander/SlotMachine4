@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="user_gold_color">#FFA102</color>
+    <color name="result_window_background">#212729</color>
 </resources>

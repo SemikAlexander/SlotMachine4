@@ -52,11 +52,17 @@ class Game (
             1 -> {
                 userGold += rate * 5
 
+                rate = 1
+                userGold -= 1
+
                 saveResults()
                 return PrefsKeys.BIG_PRIZE
             }
             2 -> {
                 userGold += rate * 3
+
+                rate = 1
+                userGold -= 1
 
                 saveResults()
                 return PrefsKeys.MEDIUM_PRIZE
@@ -70,11 +76,15 @@ class Game (
             4 -> {
                 userGold += rate * 2
 
+                rate = 1
+                userGold -= 1
+
                 saveResults()
                 return PrefsKeys.SMALL_PRIZE
             }
             else -> {
                 rate = 1
+                userGold -= 1
 
                 saveResults()
                 return PrefsKeys.NO_PRIZE

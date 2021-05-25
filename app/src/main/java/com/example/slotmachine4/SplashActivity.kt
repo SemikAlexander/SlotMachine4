@@ -2,6 +2,7 @@ package com.example.slotmachine4
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.slotmachine4.view.startActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

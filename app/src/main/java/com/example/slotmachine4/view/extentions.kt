@@ -1,4 +1,4 @@
-package com.example.slotmachine4
+package com.example.slotmachine4.view
 
 import android.app.Activity
 import android.content.Context

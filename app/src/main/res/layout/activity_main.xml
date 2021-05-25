@@ -83,6 +83,46 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/spin_result_window"
+            android:layout_width="250dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:background="@color/result_window_background">
+
+            <ImageView
+                android:id="@+id/trophy"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_trophy"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"/>
+
+            <TextView
+                android:id="@+id/result_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trophy"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:text="x5 Big prize!!!"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/f20705"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="OK"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/gradient"/>
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
