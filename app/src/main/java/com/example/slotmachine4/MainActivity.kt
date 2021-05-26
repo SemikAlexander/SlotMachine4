@@ -16,16 +16,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random.Default.nextLong
+import com.example.slotmachine4.R.drawable.*
+import android.media.MediaPlayer
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
+    private var mMediaPlayer: MediaPlayer? = null
     private var from: Long = 0
     private var until: Long = 100
     private var pressedTime: Long = 0
 
-    var stopSlotsImages = arrayListOf<Int>()
+    private var stopSlotsImages = arrayListOf<Int>()
+    private val imagesInSlots = arrayListOf<MutableList<Int>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +44,7 @@ class MainActivity : AppCompatActivity() {
         val pref = getSharedPreferences(PrefsKeys.SETTING, Context.MODE_PRIVATE)
         val gameProcess = Game(pref)
 
-        val slotsImages = listOf(
-                gameProcess.createImageSlotSequence(), gameProcess.createImageSlotSequence(),
-                gameProcess.createImageSlotSequence(), gameProcess.createImageSlotSequence(),
-                gameProcess.createImageSlotSequence()
-        )
+        val slotsImages = setImagesInSlots()
 
         binding.apply {
             userGoldTextView.text = gameProcess.getUserCash().toString()
@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             spin.setOnClickListener {
+                spinResultWindow.visibility = View.GONE
+
                 if (gameProcess.rate > 0) {
                     val slotsImagesSpin = arrayListOf<Slots>()
                     val slotsImagesView = listOf(slot1, slot2, slot3, slot4, slot5)
@@ -83,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                             GlobalScope.launch {
                                 delay(60)
                                 launch(Dispatchers.Main) {
+                                    stopSlotsImages.clear()
 
                                     for (i in 0 until 5) {
                                         val id = slotsImagesSpin[i].idImage
@@ -119,6 +122,22 @@ class MainActivity : AppCompatActivity() {
         pressedTime = System.currentTimeMillis()
     }
 
+    private fun setImagesInSlots(): ArrayList<MutableList<Int>> {
+        imagesInSlots.clear()
+
+        val images = intArrayOf (
+                icon1, icon2, icon3, icon4, icon5,
+                icon6, icon7, icon8, icon9, icon10
+        ).toMutableList()
+
+        images.shuffle()
+
+        for (i in 0 until 5)
+            imagesInSlots.add(images)
+
+        return imagesInSlots
+    }
+
     private fun setUserRateAndGold(gameProcess: Game) {
         binding.apply {
             userRate.text = gameProcess.rate.toString()
@@ -142,14 +161,30 @@ class MainActivity : AppCompatActivity() {
         return slotImagesSpin
     }
 
+    private fun playCollectSound() {
+        mMediaPlayer = MediaPlayer.create(this, R.raw.coins_collect)
+        mMediaPlayer!!.start()
+
+        GlobalScope.launch {
+            delay(800)
+            launch(Dispatchers.Main) {
+                mMediaPlayer!!.stop()
+                mMediaPlayer!!.release()
+                mMediaPlayer = null
+            }
+        }
+    }
+
     private fun showResult(result: String) {
         binding.apply {
             spinResultWindow.visibility = View.VISIBLE
 
             if (result == PrefsKeys.NO_PRIZE)
                 trophy.setImageResource(R.drawable.ic_lose)
-            else
+            else {
                 trophy.setImageResource(R.drawable.ic_trophy)
+                playCollectSound()
+            }
 
             resultTextView.text = result
 
