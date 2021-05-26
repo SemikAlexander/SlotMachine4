@@ -1,12 +1,12 @@
 package com.example.slotmachine4
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.databinding.ActivityMainBinding
-import com.example.slotmachine4.game.Actions.*
 import com.example.slotmachine4.game.Game
 import com.example.slotmachine4.game.PrefsKeys
 import com.example.slotmachine4.game.Slots
@@ -18,18 +18,18 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random.Default.nextLong
 import com.example.slotmachine4.R.drawable.*
 import android.media.MediaPlayer
+import android.view.MotionEvent
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
     private var mMediaPlayer: MediaPlayer? = null
+
     private var from: Long = 0
     private var until: Long = 100
-    private var pressedTime: Long = 0
 
-    private var stopSlotsImages = arrayListOf<Int>()
-    private val imagesInSlots = arrayListOf<MutableList<Int>>()
+    private var pressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onStart() {
         super.onStart()
 
@@ -51,17 +52,22 @@ class MainActivity : AppCompatActivity() {
             userRate.text = gameProcess.rate.toString()
 
             increaseRate.setOnClickListener {
-                gameProcess.userAction(INCREASE)
+
+                try { insertCoin() } catch (e: Exception) {}
+
+                gameProcess.userAction(PrefsKeys.INCREASE)
                 setUserRateAndGold(gameProcess)
             }
 
             reduceRate.setOnClickListener {
-                gameProcess.userAction(REDUCE)
+                gameProcess.userAction(PrefsKeys.REDUCE)
                 setUserRateAndGold(gameProcess)
             }
 
             spin.setOnClickListener {
                 spinResultWindow.visibility = View.GONE
+
+                playSound(R.raw.insert)
 
                 if (gameProcess.rate > 0) {
                     val slotsImagesSpin = arrayListOf<Slots>()
@@ -85,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                             GlobalScope.launch {
                                 delay(60)
                                 launch(Dispatchers.Main) {
-                                    stopSlotsImages.clear()
+                                    val stopSlotsImages = arrayListOf<Int>()
 
                                     for (i in 0 until 5) {
                                         val id = slotsImagesSpin[i].idImage
@@ -109,6 +115,60 @@ class MainActivity : AppCompatActivity() {
                 else
                     toast("Enter the rate!")
             }
+
+            spin.setOnLongClickListener {
+                spinResultWindow.visibility = View.GONE
+
+                playSound(R.raw.insert)
+
+                if (gameProcess.rate > 0) {
+                    val slotsImagesSpin = arrayListOf<Slots>()
+                    val slotsImagesView = listOf(slot5, slot4, slot3, slot2, slot1)
+
+                    for (i in 0 until 5) {
+                        slotsImagesSpin.add(doSpin(slotsImagesView[i], slotsImages[i]))
+                        from += 150
+                        until += 200
+                    }
+
+                    from = 0
+                    until = 100
+
+                    GlobalScope.launch {
+                        delay(4000)
+                        launch(Dispatchers.Main) {
+                            for (element in slotsImagesSpin)
+                                element.stopSpin()
+
+                            GlobalScope.launch {
+                                delay(60)
+                                launch(Dispatchers.Main) {
+                                    val stopSlotsImages = arrayListOf<Int>()
+
+                                    for (i in 0 until 5) {
+                                        val id = slotsImagesSpin[i].idImage
+
+                                        stopSlotsImages.add(id)
+                                        slotsImagesView[i].setImageResource(id)
+                                    }
+
+                                    GlobalScope.launch {
+                                        delay(60)
+                                        launch(Dispatchers.Main) {
+                                            showResult(gameProcess.spinResults(stopSlotsImages))
+                                            setUserRateAndGold(gameProcess)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                    toast("Enter the rate!")
+
+                return@setOnLongClickListener true
+            }
         }
     }
 
@@ -123,12 +183,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setImagesInSlots(): ArrayList<MutableList<Int>> {
-        imagesInSlots.clear()
+        val imagesInSlots = arrayListOf<MutableList<Int>>()
 
-        val images = intArrayOf (
+        val images = mutableListOf(
                 icon1, icon2, icon3, icon4, icon5,
                 icon6, icon7, icon8, icon9, icon10
-        ).toMutableList()
+        )
 
         images.shuffle()
 
@@ -161,8 +221,15 @@ class MainActivity : AppCompatActivity() {
         return slotImagesSpin
     }
 
-    private fun playCollectSound() {
-        mMediaPlayer = MediaPlayer.create(this, R.raw.coins_collect)
+    private fun insertCoin() {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.coin)
+            mMediaPlayer!!.start()
+        } else mMediaPlayer!!.start()
+    }
+
+    private fun playSound(musicID: Int) {
+        mMediaPlayer = MediaPlayer.create(this, musicID)
         mMediaPlayer!!.start()
 
         GlobalScope.launch {
@@ -179,11 +246,13 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             spinResultWindow.visibility = View.VISIBLE
 
-            if (result == PrefsKeys.NO_PRIZE)
-                trophy.setImageResource(R.drawable.ic_lose)
+            if (result == PrefsKeys.NO_PRIZE) {
+                trophy.setImageResource(ic_lose)
+                playSound(R.raw.lose)
+            }
             else {
-                trophy.setImageResource(R.drawable.ic_trophy)
-                playCollectSound()
+                trophy.setImageResource(ic_trophy)
+                playSound(R.raw.coins_collect)
             }
 
             resultTextView.text = result

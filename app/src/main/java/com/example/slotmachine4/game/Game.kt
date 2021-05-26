@@ -1,12 +1,6 @@
 package com.example.slotmachine4.game
 
 import android.content.SharedPreferences
-import com.example.slotmachine4.game.Actions.INCREASE
-import com.example.slotmachine4.game.Actions.REDUCE
-
-enum class Actions {
-    INCREASE, REDUCE
-}
 
 class Game (
         var pref: SharedPreferences
@@ -19,15 +13,15 @@ class Game (
         return userGold
     }
 
-    fun userAction(action: Actions) {
+    fun userAction(action: String) {
         when (action) {
-            INCREASE -> {
+            PrefsKeys.INCREASE -> {
                 if (userGold > 0) {
                     rate++
                     userGold--
                 }
             }
-            REDUCE -> {
+            PrefsKeys.REDUCE -> {
                 if (rate > 0) {
                     rate--
                     userGold++
@@ -40,37 +34,35 @@ class Game (
         when (slotsImages.distinct().count()) {
             1 -> {
                 userGold += rate * 5
-                saveResults()
+                saveResults(5)
                 return PrefsKeys.BIG_PRIZE
             }
             2 -> {
-                userGold += rate * 3
-                saveResults()
+                saveResults(4)
                 return PrefsKeys.MEDIUM_PRIZE
             }
             3 -> {
-                userGold += rate * 3
-
-                saveResults()
-                return PrefsKeys.MEDIUM_PRIZE
+                saveResults(3)
+                return PrefsKeys.MINIMUM_PRIZE
             }
             4 -> {
-                userGold += rate * 2
-                saveResults()
+                saveResults(2)
                 return PrefsKeys.SMALL_PRIZE
             }
             else -> {
-                saveResults()
+                saveResults(0)
                 return PrefsKeys.NO_PRIZE
             }
         }
     }
 
-    private fun saveResults() {
+    private fun saveResults(prizeMultiplier: Int) {
         val editor = pref.edit()
 
+        userGold += rate * prizeMultiplier
+
         rate = 1
-        userGold -= 1
+        userGold--
 
         editor.putInt(PrefsKeys.GOLD, userGold)
         editor.apply()
