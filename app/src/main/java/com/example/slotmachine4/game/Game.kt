@@ -9,7 +9,7 @@ class Game (
     var userGold = 0
 
     fun getUserCash(): Int {
-        userGold = pref.getInt(PrefsKeys.GOLD, 2500)
+        userGold = pref.getInt(PrefsKeys.GOLD, 250)
         return userGold
     }
 
@@ -65,6 +65,13 @@ class Game (
         userGold--
 
         editor.putInt(PrefsKeys.GOLD, userGold)
+        editor.apply()
+    }
+
+    fun makeGiftForUser() {
+        val editor = pref.edit()
+
+        editor.putInt(PrefsKeys.GOLD, (getUserCash() + PrefsKeys.GOLD_GIFT))
         editor.apply()
     }
 }
