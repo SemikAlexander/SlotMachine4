@@ -4,6 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CoinActivity">
+    tools:context=".CoinActivity"
+    android:background="@drawable/bakgraund1">
+
+    <TextSwitcher
+        android:id="@+id/users_gift_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:fontFamily="@font/f19847"
+        android:textSize="85sp"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/gift_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/users_gift_text_view"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_close_gift"
+        android:scaleType="centerCrop"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>
