@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
         val gameProcess = Game(pref)
 
         if (gameProcess.getUserCash() <= 1)
-            startActivity<CoinActivity>()
+            startActivity<HelpGiftActivity>()
         else {
             GlobalScope.launch {
                 delay(2000)

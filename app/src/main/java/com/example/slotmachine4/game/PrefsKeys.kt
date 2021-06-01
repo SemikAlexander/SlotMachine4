@@ -7,7 +7,7 @@ object PrefsKeys {
     const val INCREASE = "increase"
     const val REDUCE = "reduce"
 
-    const val GOLD_GIFT = 50
+    const val GOLD_GIFT = 20
 
     const val BIG_PRIZE = "x5 Big prize!!!"
     const val MEDIUM_PRIZE = "x4 Medium prize!!!"
