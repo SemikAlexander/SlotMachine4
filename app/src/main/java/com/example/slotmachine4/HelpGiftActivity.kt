@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
 import android.graphics.Color.BLACK
+import android.media.MediaPlayer
 import android.view.Gravity.CENTER_HORIZONTAL
 import android.view.View
 import android.widget.TextView
@@ -15,12 +16,14 @@ import com.example.slotmachine4.databinding.ActivityHelpGiftBinding
 import com.example.slotmachine4.game.Game
 import com.example.slotmachine4.game.PrefsKeys
 import com.example.slotmachine4.view.startActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HelpGiftActivity : AppCompatActivity() {
     lateinit var binding: ActivityHelpGiftBinding
+    private var mMediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +62,8 @@ class HelpGiftActivity : AppCompatActivity() {
 
                 gameProcess.makeGiftForUser()
 
+                playSound(R.raw.gift_coins)
+
                 GlobalScope.launch {
                     delay(800)
                     startActivity<MainActivity>()
@@ -66,5 +71,10 @@ class HelpGiftActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun playSound(musicID: Int) {
+        mMediaPlayer = MediaPlayer.create(this, musicID)
+        mMediaPlayer!!.start()
     }
 }

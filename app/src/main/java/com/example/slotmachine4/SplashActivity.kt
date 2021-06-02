@@ -23,13 +23,17 @@ class SplashActivity : AppCompatActivity() {
         val pref = getSharedPreferences(PrefsKeys.SETTING, Context.MODE_PRIVATE)
         val gameProcess = Game(pref)
 
-        if (gameProcess.getUserCash() <= 1)
-            startActivity<HelpGiftActivity>()
-        else {
-            GlobalScope.launch {
-                delay(2000)
-                startActivity<MainActivity>()
-                finish()
+        when {
+            gameProcess.getUserCash() <= 1 -> startActivity<HelpGiftActivity>()
+            gameProcess.everydayGift() == 10 -> {
+                startActivity<CoinActivity>()
+            }
+            else -> {
+                GlobalScope.launch {
+                    delay(2000)
+                    startActivity<CoinActivity>()
+                    finish()
+                }
             }
         }
     }

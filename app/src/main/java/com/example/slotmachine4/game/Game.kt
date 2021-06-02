@@ -1,10 +1,16 @@
 package com.example.slotmachine4.game
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import java.text.SimpleDateFormat
+import java.util.*
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class Game (
         var pref: SharedPreferences
 ) {
+    private val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.US)
+
     var rate = 1
     var userGold = 0
 
@@ -73,5 +79,26 @@ class Game (
 
         editor.putInt(PrefsKeys.GOLD, (getUserCash() + PrefsKeys.GOLD_GIFT))
         editor.apply()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun everydayGift(): Int {
+        val lastEntryUnix = pref.getLong(PrefsKeys.ENTRY_DAY, 0)
+        val currentDay = SimpleDateFormat("dd.MM.yyyy").parse(sdf.format(Date()))
+
+        val editor = pref.edit()
+        editor.putLong(PrefsKeys.ENTRY_DAY, (currentDay.time / 1000))
+        editor.putInt(PrefsKeys.GOLD, (getUserCash() + PrefsKeys.EVERYDAY_GOLD_GIFT))
+        editor.apply()
+
+        if (lastEntryUnix == 0L)
+            return 10
+
+        val lastEntryDay = SimpleDateFormat("dd.MM.yyyy").parse(sdf.format(Date(lastEntryUnix * 1000)))
+
+        return when (((currentDay.time - lastEntryDay.time) / (24 * 60 * 60 * 1000)).toInt()) {
+            1 -> 10
+            else -> 0
+        }
     }
 }
