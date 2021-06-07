@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -16,10 +15,10 @@ import android.widget.ViewSwitcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.databinding.ActivityCoinBinding
 import com.example.slotmachine4.game.Gifts
-import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeys
 import com.example.slotmachine4.game.Sounds
+import com.example.slotmachine4.preferences.PrefsKeysPrizes
 import com.example.slotmachine4.view.startActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,7 +51,7 @@ class CoinActivity : AppCompatActivity() {
             val sounds = Sounds()
             prizeButton.setOnClickListener {
                 everydayGiftTextView.visibility = View.VISIBLE
-                everydayGiftTextView.setText("+" + PrefsKeys.EVERYDAY_GOLD_GIFT.toString())
+                everydayGiftTextView.setText("+" + PrefsKeysPrizes.EVERYDAY_GOLD_GIFT.toString())
 
                 sounds.playSound(R.raw.gift_coins, this@CoinActivity)
 

@@ -2,6 +2,8 @@ package com.example.slotmachine4.game
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import com.example.slotmachine4.preferences.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeysPrizes
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +25,7 @@ class Gifts(
         if (lastEntryUnix == 0L) {
             editor.putInt(
                     PrefsKeys.GOLD,
-                    (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.EVERYDAY_GOLD_GIFT)
+                    (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeysPrizes.EVERYDAY_GOLD_GIFT)
             )
 
             countDayEntry++
@@ -39,7 +41,7 @@ class Gifts(
             1 -> {
                 editor.putInt(
                         PrefsKeys.GOLD,
-                        (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.EVERYDAY_GOLD_GIFT)
+                        (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeysPrizes.EVERYDAY_GOLD_GIFT)
                 )
 
                 countDayEntry++
@@ -63,7 +65,7 @@ class Gifts(
 
         editor.putInt(
                 PrefsKeys.GOLD,
-                (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.GOLD_GIFT)
+                (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeysPrizes.GOLD_GIFT)
         )
         editor.apply()
     }

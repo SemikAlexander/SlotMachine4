@@ -14,8 +14,9 @@ import com.daimajia.androidanimations.library.YoYo
 import com.example.slotmachine4.R.drawable.*
 import com.example.slotmachine4.databinding.ActivityHelpGiftBinding
 import com.example.slotmachine4.game.Gifts
-import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeys
 import com.example.slotmachine4.game.Sounds
+import com.example.slotmachine4.preferences.PrefsKeysPrizes
 import com.example.slotmachine4.view.startActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -59,7 +60,7 @@ class HelpGiftActivity : AppCompatActivity() {
                 val sounds = Sounds()
 
                 usersGiftTextView.visibility = View.VISIBLE
-                usersGiftTextView.setText("+${PrefsKeys.GOLD_GIFT}")
+                usersGiftTextView.setText("+${PrefsKeysPrizes.GOLD_GIFT}")
 
                 gift.makeSaveGiftForUser()
 

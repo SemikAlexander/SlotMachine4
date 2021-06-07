@@ -4,9 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.databinding.ActivitySplashBinding
-import com.example.slotmachine4.game.Game
 import com.example.slotmachine4.game.Gifts
-import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeys
 import com.example.slotmachine4.view.startActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

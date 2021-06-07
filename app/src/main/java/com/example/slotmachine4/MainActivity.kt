@@ -3,18 +3,19 @@ package com.example.slotmachine4
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.R.drawable.ic_money
 import com.example.slotmachine4.R.drawable.ic_sad
 import com.example.slotmachine4.databinding.ActivityMainBinding
 import com.example.slotmachine4.game.*
+import com.example.slotmachine4.preferences.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeysActions
+import com.example.slotmachine4.preferences.PrefsKeysPrizes
 import com.example.slotmachine4.view.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,12 +53,12 @@ class MainActivity : AppCompatActivity() {
 
                 try { sounds.insertCoin(this@MainActivity) } catch (e: Exception) {}
 
-                gameProcess.userAction(PrefsKeys.INCREASE)
+                gameProcess.userAction(PrefsKeysActions.INCREASE)
                 setUserRateAndGold(gameProcess)
             }
 
             reduceRate.setOnClickListener {
-                gameProcess.userAction(PrefsKeys.REDUCE)
+                gameProcess.userAction(PrefsKeysActions.REDUCE)
                 setUserRateAndGold(gameProcess)
             }
 
@@ -207,7 +208,7 @@ class MainActivity : AppCompatActivity() {
             spinResultWindow.visibility = View.VISIBLE
             val sounds = Sounds()
 
-            if (result == PrefsKeys.NO_PRIZE) {
+            if (result == PrefsKeysPrizes.NO_PRIZE) {
                 trophy.setImageResource(ic_sad)
                 sounds.playSoundInGame(R.raw.lose, this@MainActivity)
             }

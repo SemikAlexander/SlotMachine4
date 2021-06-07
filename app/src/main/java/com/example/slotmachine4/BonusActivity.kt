@@ -15,7 +15,7 @@ import android.widget.TextView
 import android.widget.ViewSwitcher
 import com.example.slotmachine4.databinding.ActivityBonusBinding
 import com.example.slotmachine4.game.Gifts
-import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeys
 import com.example.slotmachine4.game.Sounds
 
 class BonusActivity : AppCompatActivity() {

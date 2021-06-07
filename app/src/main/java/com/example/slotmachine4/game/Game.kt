@@ -3,6 +3,7 @@ package com.example.slotmachine4.game
 import android.widget.ImageView
 import com.example.slotmachine4.MainActivity
 import com.example.slotmachine4.R.drawable.*
+import com.example.slotmachine4.preferences.PrefsKeysActions
 import java.util.*
 import kotlin.random.Random
 
@@ -12,13 +13,13 @@ class Game {
 
     fun userAction(action: String) {
         when (action) {
-            PrefsKeys.INCREASE -> {
+            PrefsKeysActions.INCREASE -> {
                 if (userGold > 0) {
                     rate++
                     userGold--
                 }
             }
-            PrefsKeys.REDUCE -> {
+            PrefsKeysActions.REDUCE -> {
                 if (rate > 0) {
                     rate--
                     userGold++
