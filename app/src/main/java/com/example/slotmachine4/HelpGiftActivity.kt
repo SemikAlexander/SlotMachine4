@@ -14,7 +14,9 @@ import com.daimajia.androidanimations.library.YoYo
 import com.example.slotmachine4.R.drawable.*
 import com.example.slotmachine4.databinding.ActivityHelpGiftBinding
 import com.example.slotmachine4.game.Game
+import com.example.slotmachine4.game.Gifts
 import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.game.Sounds
 import com.example.slotmachine4.view.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -46,7 +48,7 @@ class HelpGiftActivity : AppCompatActivity() {
         super.onStart()
 
         val pref = getSharedPreferences(PrefsKeys.SETTING, Context.MODE_PRIVATE)
-        val gameProcess = Game(pref)
+        val gift = Gifts(pref)
 
         binding.apply {
             YoYo.with(Techniques.Tada)
@@ -55,14 +57,15 @@ class HelpGiftActivity : AppCompatActivity() {
                 .playOn(giftButton)
 
             giftButton.setOnClickListener{
-                giftButton.setImageResource(ic_open_gift)
+                giftButton.setImageResource(icon9)
+                val sounds = Sounds()
 
                 usersGiftTextView.visibility = View.VISIBLE
                 usersGiftTextView.setText("+${PrefsKeys.GOLD_GIFT}")
 
-                gameProcess.makeGiftForUser()
+                gift.makeGiftForUser()
 
-                playSound(R.raw.gift_coins)
+                sounds.playSound(R.raw.gift_coins, this@HelpGiftActivity)
 
                 GlobalScope.launch {
                     delay(800)
@@ -71,10 +74,5 @@ class HelpGiftActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun playSound(musicID: Int) {
-        mMediaPlayer = MediaPlayer.create(this, musicID)
-        mMediaPlayer!!.start()
     }
 }

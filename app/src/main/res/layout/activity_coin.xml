@@ -26,7 +26,7 @@
         android:layout_below="@id/everyday_gift_text_view"
         android:layout_marginTop="10dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_close_gift"
+        android:src="@drawable/icon10"
         android:scaleType="centerCrop"
         android:background="@android:color/transparent"/>
 

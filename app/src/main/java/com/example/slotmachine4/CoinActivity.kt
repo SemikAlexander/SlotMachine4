@@ -15,6 +15,7 @@ import android.widget.ViewSwitcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.databinding.ActivityCoinBinding
 import com.example.slotmachine4.game.PrefsKeys
+import com.example.slotmachine4.game.Sounds
 import com.example.slotmachine4.view.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -47,11 +48,12 @@ class CoinActivity : AppCompatActivity() {
         super.onStart()
 
         binding.apply {
+            val sounds = Sounds()
             prizeButton.setOnClickListener {
                 everydayGiftTextView.visibility = View.VISIBLE
                 everydayGiftTextView.setText("+" + PrefsKeys.EVERYDAY_GOLD_GIFT.toString())
 
-                playSound(R.raw.gift_coins)
+                sounds.playSound(R.raw.gift_coins, this@CoinActivity)
 
                 val oa1 = ObjectAnimator.ofFloat(prizeButton, "scaleX", 1f, 0f)
                 val oa2 = ObjectAnimator.ofFloat(prizeButton, "scaleX", 0f, 1f)
@@ -60,7 +62,7 @@ class CoinActivity : AppCompatActivity() {
                 oa1.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         super.onAnimationEnd(animation)
-                        prizeButton.setImageResource(R.drawable.ic_open_gift)
+                        prizeButton.setImageResource(R.drawable.icon8)
                         oa2.start()
                     }
                 })
@@ -73,10 +75,5 @@ class CoinActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun playSound(musicID: Int) {
-        mMediaPlayer = MediaPlayer.create(this, musicID)
-        mMediaPlayer!!.start()
     }
 }
