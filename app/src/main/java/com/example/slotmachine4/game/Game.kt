@@ -1,6 +1,5 @@
 package com.example.slotmachine4.game
 
-import android.content.SharedPreferences
 import android.widget.ImageView
 import com.example.slotmachine4.MainActivity
 import com.example.slotmachine4.R.drawable.*

@@ -3,6 +3,7 @@ package com.example.slotmachine4
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.ViewSwitcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.slotmachine4.databinding.ActivityCoinBinding
+import com.example.slotmachine4.game.Gifts
 import com.example.slotmachine4.game.PrefsKeys
 import com.example.slotmachine4.game.Sounds
 import com.example.slotmachine4.view.startActivity
@@ -25,7 +27,6 @@ import kotlinx.coroutines.launch
 
 class CoinActivity : AppCompatActivity() {
     lateinit var binding: ActivityCoinBinding
-    private var mMediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +69,21 @@ class CoinActivity : AppCompatActivity() {
                 })
                 oa1.start()
 
-                GlobalScope.launch {
-                    delay(1000)
-                    startActivity<MainActivity>()
-                    finish()
+                val gift = Gifts(getSharedPreferences(PrefsKeys.SETTING, Context.MODE_PRIVATE))
+
+                if (gift.bigGift() != emptyList<Int>()) {
+                    GlobalScope.launch {
+                        delay(1000)
+                        startActivity<BonusActivity>()
+                        finish()
+                    }
+                }
+                else {
+                    GlobalScope.launch {
+                        delay(1000)
+                        startActivity<MainActivity>()
+                        finish()
+                    }
                 }
             }
         }

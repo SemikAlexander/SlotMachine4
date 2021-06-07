@@ -9,7 +9,9 @@ object PrefsKeys {
 
     const val GOLD_GIFT = 20
     const val EVERYDAY_GOLD_GIFT = 10
+
     const val ENTRY_DAY = "day of entry"
+    const val COUNT_ENTRY_DAY = "count day of entry"
 
     const val BIG_PRIZE = "x5 Big prize!!!"
     const val MEDIUM_PRIZE = "x4 Medium prize!!!"

@@ -13,6 +13,8 @@ class Gifts(
     @SuppressLint("SimpleDateFormat")
     fun everydayGift(): Int {
         val lastEntryUnix = pref.getLong(PrefsKeys.ENTRY_DAY, 0)
+        var countDayEntry = pref.getInt(PrefsKeys.COUNT_ENTRY_DAY, 0)
+
         val currentDay = SimpleDateFormat("dd.MM.yyyy").parse(sdf.format(Date()))
 
         val editor = pref.edit()
@@ -23,6 +25,10 @@ class Gifts(
                     PrefsKeys.GOLD,
                     (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.EVERYDAY_GOLD_GIFT)
             )
+
+            countDayEntry++
+            editor.putInt(PrefsKeys.COUNT_ENTRY_DAY, countDayEntry)
+
             editor.apply()
             return 10
         }
@@ -35,17 +41,24 @@ class Gifts(
                         PrefsKeys.GOLD,
                         (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.EVERYDAY_GOLD_GIFT)
                 )
+
+                countDayEntry++
+                editor.putInt(PrefsKeys.COUNT_ENTRY_DAY, countDayEntry)
+
                 editor.apply()
                 10
             }
             else -> {
+                countDayEntry = 1
+                editor.putInt(PrefsKeys.COUNT_ENTRY_DAY, countDayEntry)
+
                 editor.apply()
                 0
             }
         }
     }
 
-    fun makeGiftForUser() {
+    fun makeSaveGiftForUser() {
         val editor = pref.edit()
 
         editor.putInt(
@@ -53,5 +66,22 @@ class Gifts(
                 (pref.getInt(PrefsKeys.GOLD, 250) + PrefsKeys.GOLD_GIFT)
         )
         editor.apply()
+    }
+
+    fun bigGift(): List<Int> {
+        val editor = pref.edit()
+
+        var countDaysEntry = pref.getInt(PrefsKeys.COUNT_ENTRY_DAY, 0)
+
+        if (countDaysEntry == 7){
+            countDaysEntry = 1
+            editor.putInt(PrefsKeys.COUNT_ENTRY_DAY, countDaysEntry)
+            editor.apply()
+            val prize = mutableListOf(25, 50, 75, 100)
+            prize.shuffle()
+
+            return prize
+        }
+        return emptyList()
     }
 }

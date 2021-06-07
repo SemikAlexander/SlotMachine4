@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BonusActivity"
+    android:background="@drawable/bakgraund1">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageButton
+            android:id="@+id/prize1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon10"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/prize2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon10"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/prize3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon10"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/prize4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon10"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <TextSwitcher
+        android:id="@+id/big_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:fontFamily="@font/f19847"
+        android:textSize="85sp"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"
+        android:visibility="gone"
+        android:layout_below="@+id/linear"/>
+
+</RelativeLayout>
