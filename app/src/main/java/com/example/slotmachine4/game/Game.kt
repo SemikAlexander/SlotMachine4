@@ -44,7 +44,7 @@ class Game {
         return imagesInSlots
     }
 
-    fun doSpin(
+    fun startSpin(
             slot: ImageView,
             imagesArray: MutableList<Int>,
             from: Long,

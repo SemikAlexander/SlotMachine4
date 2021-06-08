@@ -2,6 +2,7 @@ package com.example.slotmachine4.game
 
 import android.content.SharedPreferences
 import com.example.slotmachine4.preferences.PrefsKeys
+import com.example.slotmachine4.preferences.PrefsKeysPrizes
 
 class Statistics {
     var x5Prizes = 0
@@ -10,15 +11,13 @@ class Statistics {
     var x2Prizes = 0
     var spinCount = 0
 
-    fun saveStatInfo(
-            pref: SharedPreferences
-    ) {
+    fun saveStatInfo(pref: SharedPreferences) {
         val editor = pref.edit()
 
-        editor.putInt(PrefsKeys.BIG_PRIZES_COUNT, x5Prizes)
-        editor.putInt(PrefsKeys.MEDIUM_PRIZES_COUNT, x4Prizes)
-        editor.putInt(PrefsKeys.MINIMUM_PRIZES_COUNT, x3Prizes)
-        editor.putInt(PrefsKeys.SMALL_PRIZES_COUNT, x2Prizes)
+        editor.putInt(PrefsKeysPrizes.BIG_PRIZES_COUNT, x5Prizes)
+        editor.putInt(PrefsKeysPrizes.MEDIUM_PRIZES_COUNT, x4Prizes)
+        editor.putInt(PrefsKeysPrizes.MINIMUM_PRIZES_COUNT, x3Prizes)
+        editor.putInt(PrefsKeysPrizes.SMALL_PRIZES_COUNT, x2Prizes)
 
         editor.putInt(PrefsKeys.SPIN_COUNT, spinCount)
 
@@ -28,12 +27,22 @@ class Statistics {
     fun getStatInfo(pref: SharedPreferences): List<Int> {
         return listOf(
                 pref.getInt(PrefsKeys.GOLD, 0),
-                pref.getInt(PrefsKeys.BIG_PRIZES_COUNT, 0),
-                pref.getInt(PrefsKeys.MEDIUM_PRIZES_COUNT, 0),
-                pref.getInt(PrefsKeys.MINIMUM_PRIZES_COUNT, 0),
-                pref.getInt(PrefsKeys.SMALL_PRIZES_COUNT, 0),
+                pref.getInt(PrefsKeysPrizes.BIG_PRIZES_COUNT, 0),
+                pref.getInt(PrefsKeysPrizes.MEDIUM_PRIZES_COUNT, 0),
+                pref.getInt(PrefsKeysPrizes.MINIMUM_PRIZES_COUNT, 0),
+                pref.getInt(PrefsKeysPrizes.SMALL_PRIZES_COUNT, 0),
                 pref.getInt(PrefsKeys.SPIN_COUNT, 0)
         )
+    }
+
+    fun setValues(pref: SharedPreferences) {
+        val values = getStatInfo(pref)
+
+        x5Prizes = values[1]
+        x4Prizes = values[2]
+        x3Prizes = values[3]
+        x2Prizes = values[4]
+        spinCount = values[5]
     }
 
     fun clearStatistic(pref: SharedPreferences) {
@@ -44,5 +53,16 @@ class Statistics {
         spinCount = 0
 
         saveStatInfo(pref)
+    }
+
+    fun thanksMessage(): String {
+        when (spinCount) {
+            10 -> return "$spinCount spins! Thank you for long play!"
+            50 -> return "$spinCount spins! Thank you for so long play in our game!"
+            100 -> return "$spinCount spins!! You're the best!"
+            200 -> return "$spinCount spins!!! You're really the best!! We are very grateful to you!"
+            300 -> return "$spinCount spins!!!! You're truly the best in whole world! Thank you so much!!!"
+        }
+        return ""
     }
 }

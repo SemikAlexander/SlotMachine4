@@ -18,6 +18,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.example.slotmachine4.view.startActivity
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity() {
     private var until: Long = 100
 
     private var pressedTime: Long = 0
+
+    private val gameProcess = Game()
+    private val gameResult = Results()
+    private val sounds = Sounds()
+    private val statistics = Statistics()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         val pref = getSharedPreferences(PrefsKeys.SETTING, Context.MODE_PRIVATE)
 
-        val gameProcess = Game()
-        val gameResult = Results(pref)
-        val sounds = Sounds()
-        val statistics = Statistics()
+        statistics.setValues(pref)
 
         val slotsImages = gameProcess.setImagesInSlots()
 
@@ -52,9 +55,10 @@ class MainActivity : AppCompatActivity() {
             userGoldTextView.text = gameProcess.userGold.toString()
             userRate.text = gameProcess.rate.toString()
 
+            val slotsImagesView = listOf(slot1, slot2, slot3, slot4, slot5)
+
             userGoldTextView.setOnLongClickListener {
                 startActivity<StatisticActivity>()
-
                 return@setOnLongClickListener true
             }
 
@@ -80,11 +84,10 @@ class MainActivity : AppCompatActivity() {
 
                 if (gameProcess.rate > 0) {
                     val slotsImagesSpin = arrayListOf<Slots>()
-                    val slotsImagesView = listOf(slot1, slot2, slot3, slot4, slot5)
 
                     for (i in 0 until 5) {
                         slotsImagesSpin.add(
-                                gameProcess.doSpin(
+                                gameProcess.startSpin(
                                         slotsImagesView[i],
                                         slotsImages[i],
                                         from,
@@ -123,7 +126,9 @@ class MainActivity : AppCompatActivity() {
                                             showResult(
                                                     gameResult.spinResults(
                                                             stopSlotsImages,
-                                                            gameProcess
+                                                            gameProcess,
+                                                            pref,
+                                                            statistics
                                                     ),
                                                     statistics,
                                                     pref
@@ -153,7 +158,7 @@ class MainActivity : AppCompatActivity() {
 
                     for (i in 0 until 5) {
                         slotsImagesSpin.add(
-                                gameProcess.doSpin(
+                                gameProcess.startSpin(
                                         slotsImagesView[i],
                                         slotsImages[i],
                                         from,
@@ -192,7 +197,9 @@ class MainActivity : AppCompatActivity() {
                                             showResult(
                                                     gameResult.spinResults(
                                                             stopSlotsImages,
-                                                            gameProcess
+                                                            gameProcess,
+                                                            pref,
+                                                            statistics
                                                     ),
                                                     statistics,
                                                     pref
@@ -209,6 +216,18 @@ class MainActivity : AppCompatActivity() {
                     toast("Enter the rate!")
 
                 return@setOnLongClickListener true
+            }
+
+            slotsImagesView.indices.forEach { i ->
+                slotsImagesView[i].setOnLongClickListener {
+                    val images = slotsImages[Random.nextInt(0, 4)]
+
+                    sounds.playSound(R.raw.change, this@MainActivity)
+
+                    slotsImagesView[i].setImageResource(images[Random.nextInt(0, 4)])
+                    return@setOnLongClickListener true
+                }
+
             }
         }
     }
@@ -242,13 +261,6 @@ class MainActivity : AppCompatActivity() {
             else {
                 trophy.setImageResource(ic_money)
                 sounds.playSoundInGame(R.raw.coins_collect, this@MainActivity)
-
-                when (result) {
-                    PrefsKeysPrizes.BIG_PRIZE -> statistics.x5Prizes++
-                    PrefsKeysPrizes.MEDIUM_PRIZE -> statistics.x4Prizes++
-                    PrefsKeysPrizes.MINIMUM_PRIZE -> statistics.x3Prizes++
-                    PrefsKeysPrizes.SMALL_PRIZE -> statistics.x2Prizes++
-                }
             }
 
             resultTextView.text = result
@@ -257,6 +269,10 @@ class MainActivity : AppCompatActivity() {
                 spinResultWindow.visibility = View.GONE
 
                 statistics.saveStatInfo(preferences)
+
+                val message = statistics.thanksMessage()
+                if (message != "")
+                    toast(message)
             }
         }
     }
