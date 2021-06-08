@@ -1,6 +1,7 @@
 package com.example.slotmachine4
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.example.slotmachine4.view.startActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val gameProcess = Game()
         val gameResult = Results(pref)
         val sounds = Sounds()
+        val statistics = Statistics()
 
         val slotsImages = gameProcess.setImagesInSlots()
 
@@ -48,6 +51,12 @@ class MainActivity : AppCompatActivity() {
             gameProcess.userGold = pref.getInt(PrefsKeys.GOLD, 250)
             userGoldTextView.text = gameProcess.userGold.toString()
             userRate.text = gameProcess.rate.toString()
+
+            userGoldTextView.setOnLongClickListener {
+                startActivity<StatisticActivity>()
+
+                return@setOnLongClickListener true
+            }
 
             increaseRate.setOnClickListener {
 
@@ -66,6 +75,8 @@ class MainActivity : AppCompatActivity() {
                 spinResultWindow.visibility = View.GONE
 
                 sounds.playSoundInGame(R.raw.insert, this@MainActivity)
+
+                statistics.spinCount++
 
                 if (gameProcess.rate > 0) {
                     val slotsImagesSpin = arrayListOf<Slots>()
@@ -109,7 +120,14 @@ class MainActivity : AppCompatActivity() {
                                     GlobalScope.launch {
                                         delay(60)
                                         launch(Dispatchers.Main) {
-                                            showResult(gameResult.spinResults(stopSlotsImages, gameProcess))
+                                            showResult(
+                                                    gameResult.spinResults(
+                                                            stopSlotsImages,
+                                                            gameProcess
+                                                    ),
+                                                    statistics,
+                                                    pref
+                                            )
                                             setUserRateAndGold(gameProcess)
                                         }
                                     }
@@ -126,6 +144,8 @@ class MainActivity : AppCompatActivity() {
                 spinResultWindow.visibility = View.GONE
 
                 sounds.playSoundInGame(R.raw.insert, this@MainActivity)
+
+                statistics.spinCount++
 
                 if (gameProcess.rate > 0) {
                     val slotsImagesSpin = arrayListOf<Slots>()
@@ -169,7 +189,14 @@ class MainActivity : AppCompatActivity() {
                                     GlobalScope.launch {
                                         delay(60)
                                         launch(Dispatchers.Main) {
-                                            showResult(gameResult.spinResults(stopSlotsImages, gameProcess))
+                                            showResult(
+                                                    gameResult.spinResults(
+                                                            stopSlotsImages,
+                                                            gameProcess
+                                                    ),
+                                                    statistics,
+                                                    pref
+                                            )
                                             setUserRateAndGold(gameProcess)
                                         }
                                     }
@@ -203,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showResult(result: String) {
+    private fun showResult(result: String, statistics: Statistics, preferences: SharedPreferences) {
         binding.apply {
             spinResultWindow.visibility = View.VISIBLE
             val sounds = Sounds()
@@ -215,12 +242,21 @@ class MainActivity : AppCompatActivity() {
             else {
                 trophy.setImageResource(ic_money)
                 sounds.playSoundInGame(R.raw.coins_collect, this@MainActivity)
+
+                when (result) {
+                    PrefsKeysPrizes.BIG_PRIZE -> statistics.x5Prizes++
+                    PrefsKeysPrizes.MEDIUM_PRIZE -> statistics.x4Prizes++
+                    PrefsKeysPrizes.MINIMUM_PRIZE -> statistics.x3Prizes++
+                    PrefsKeysPrizes.SMALL_PRIZE -> statistics.x2Prizes++
+                }
             }
 
             resultTextView.text = result
 
             okButton.setOnClickListener {
                 spinResultWindow.visibility = View.GONE
+
+                statistics.saveStatInfo(preferences)
             }
         }
     }

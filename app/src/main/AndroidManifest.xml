@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SlotMachine4">
-        <activity android:name=".BonusActivity"
+        <activity android:name=".StatisticActivity"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".BonusActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".HelpGiftActivity"
             android:screenOrientation="landscape" />

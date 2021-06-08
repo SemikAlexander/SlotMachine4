@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">SlotMachine4</string>
     <string name="game_name">Slot Machine</string>
+
+    <string name="daily_stat">Daily statistic</string>
+    <string name="user_gold">Gold</string>
+    <string name="prizes_received">Prizes received</string>
+    <string name="users_spin">Spins</string>
+
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
