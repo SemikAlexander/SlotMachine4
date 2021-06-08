@@ -8,17 +8,12 @@
     tools:context=".StatisticActivity"
     android:background="@drawable/bakgraund1">
 
-    <TextView
+    <com.example.slotmachine4.view.HeaderTitleStatisticTextView
         android:id="@+id/header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/daily_stat"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/f19847"
-        android:textStyle="bold"
-        android:textSize="40sp"/>
+        android:layout_marginTop="10dp"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -64,18 +59,13 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.example.slotmachine4.view.PrizesReceivedTextView
             android:id="@+id/prizes_received"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/gold_stat"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/f19847"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:text="@string/prizes_received"/>
+            android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:id="@+id/prizes_stat"
@@ -91,7 +81,7 @@
                 android:text="x5"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:fontFamily="@font/f20705"/>
+                android:fontFamily="@font/f19847"/>
 
             <TextView
                 android:id="@+id/x5_prize"
@@ -112,7 +102,7 @@
                 android:text="x4"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:fontFamily="@font/f20705"/>
+                android:fontFamily="@font/f19847"/>
 
             <TextView
                 android:id="@+id/x4_prize"
@@ -133,7 +123,7 @@
                 android:text="x3"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:fontFamily="@font/f20705"/>
+                android:fontFamily="@font/f19847"/>
 
             <TextView
                 android:id="@+id/x3_prize"
@@ -154,7 +144,7 @@
                 android:text="x2"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:fontFamily="@font/f20705"/>
+                android:fontFamily="@font/f19847"/>
 
             <TextView
                 android:id="@+id/x2_prize"

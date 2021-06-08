@@ -2,6 +2,8 @@
     <string name="app_name">SlotMachine4</string>
     <string name="game_name">Slot Machine</string>
 
+    <string name="bonus_for_user">Bonus!</string>
+    
     <string name="daily_stat">Daily statistic</string>
     <string name="user_gold">Gold</string>
     <string name="prizes_received">Prizes received</string>
