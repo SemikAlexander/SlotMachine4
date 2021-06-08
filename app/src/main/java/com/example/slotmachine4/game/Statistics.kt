@@ -58,6 +58,7 @@ class Statistics {
     fun thanksMessage(): String {
         when (spinCount) {
             10 -> return "$spinCount spins! Thank you for long play!"
+            20 -> return "$spinCount spins! You're play is good motivation for us! Thank you!!!"
             50 -> return "$spinCount spins! Thank you for so long play in our game!"
             100 -> return "$spinCount spins!! You're the best!"
             200 -> return "$spinCount spins!!! You're really the best!! We are very grateful to you!"
